@@ -6,8 +6,6 @@ public class Rail : MonoBehaviour
 {
     private int length;
 
-    public GameObject posTest;
-
     public bool isLoop;
 
     public float maxDistance;
@@ -48,7 +46,6 @@ public class Rail : MonoBehaviour
             if (distGlobal >= distance)
             {
                 posPoint = transform.GetChild(i + 1).position + (direction.normalized * (distance - distGlobal));
-                posTest.transform.position = posPoint;
                 break;
             }
             else if(i == length - 2)
@@ -62,7 +59,6 @@ public class Rail : MonoBehaviour
                 else
                 {
                     posPoint = transform.GetChild(i + 1).position;
-                    posTest.transform.position = posPoint;
                     distance = distGlobal;
                 }
             }
