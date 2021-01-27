@@ -59,7 +59,6 @@ public class FixedFollowView : AView
             else
                 pitch = centralPointPitch + pitchOffsetMax;
         }
-
     }
 
     public override CameraConfiguration GetConfiguration()
