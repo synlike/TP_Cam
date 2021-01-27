@@ -7,6 +7,7 @@ public abstract class AView : MonoBehaviour
 
     private void Start()
     {
+        Debug.Log("Coucou");
         if (isActiveOnStart)
         {
             SetActive(isActiveOnStart);

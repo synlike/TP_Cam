@@ -92,10 +92,10 @@ public class CameraController : MonoBehaviour
 
     public void OnDrawGizmos()
     {
-        cameraConfiguration.DrawGizmos(Color.yellow);
-        foreach(FixedView fix in activeViews)
+        //cameraConfiguration.DrawGizmos(Color.yellow);
+        foreach(AView view in activeViews)
         {
-            fix.GetConfiguration().DrawGizmos(Color.blue);
+            view.GetConfiguration().DrawGizmos(Color.blue);
         }
     }
 }       
