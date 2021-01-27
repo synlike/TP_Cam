@@ -88,7 +88,7 @@ public class DollyView : AView
 
             float projectedDistanceLeft = Vector3.Dot(vecLeft, vecToTargetLeft) / vecLeft.magnitude;
             projectedDistanceLeft = Mathf.Clamp(projectedDistanceLeft, 0, vecLeft.magnitude);
-            float actualDistanceLeft = GetActualDistance(closestNode, projectedDistanceLeft);
+            float actualDistanceLeft = GetActualDistance(closestNode - 1, projectedDistanceLeft);
 
             Debug.Log("Projected Distance Left = " + projectedDistanceLeft + " || ActualDistance Left = " + actualDistanceLeft);
             Vector3 posPointLeft = rail.GetPosition(actualDistanceLeft);
@@ -100,7 +100,7 @@ public class DollyView : AView
 
             float projectedDistanceRight = Vector3.Dot(vecRight, vecToTargetRight) / vecRight.magnitude;
             projectedDistanceRight = Mathf.Clamp(projectedDistanceRight, 0, vecRight.magnitude);
-            float actualDistanceRight = GetActualDistance(closestNode + 1, projectedDistanceRight);
+            float actualDistanceRight = GetActualDistance(closestNode, projectedDistanceRight);
 
             Debug.Log("Projected Distance Right = " + projectedDistanceRight + " || ActualDistance Right = " + actualDistanceRight);
             Vector3 posPointRight = rail.GetPosition(actualDistanceRight);
@@ -185,7 +185,7 @@ public class DollyView : AView
     public float GetActualDistance(int node, float distance)
     {
         float actualDist = 0;
-        for (int i = 0; i < node - 1; i++)
+        for (int i = 0; i < node; i++)
         {
             actualDist += Vector3.Distance(rail.transform.GetChild(i).position, rail.transform.GetChild(i + 1).position);
         }
