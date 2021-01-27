@@ -118,7 +118,7 @@ public class DollyView : AView
             posPoint = rail.GetPosition(distance);
 
         }
-
+        //transform.position = Vector3.Lerp(transform.position, posPoint, Time.deltaTime);
         transform.position = posPoint;
     }
 

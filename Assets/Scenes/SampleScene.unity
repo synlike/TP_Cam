@@ -172,8 +172,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d8de17414393714dba7b89c96266558, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isLoop: 1
-  posTest: {fileID: 1699350996}
+  isLoop: 0
+  maxDistance: 0
 --- !u!1 &42767616
 GameObject:
   m_ObjectHideFlags: 0
@@ -457,13 +457,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weight: 1
   isActiveOnStart: 1
+  isAuto: 1
   roll: 0
   fov: 60
   distance: 0
   target: {fileID: 65153892}
-  rail: {fileID: 12094362}
+  rail: {fileID: 12094364}
   railPosition: {x: 0, y: 0, z: 0}
-  speed: 5
+  speed: 50
 --- !u!4 &318156292
 Transform:
   m_ObjectHideFlags: 0
