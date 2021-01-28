@@ -31,9 +31,11 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Smoothing();
+
         PlaceCamera(cameraConfiguration);
 
-        cameraConfiguration = GetConfigurationMoyenne();
+        //cameraConfiguration = GetConfigurationMoyenne();
     }
 
     public void AddView(AView view)
@@ -58,9 +60,16 @@ public class CameraController : MonoBehaviour
     {
         if (speed * Time.deltaTime < 1)
         {
+            configCourante.pitch = configCourante.pitch + (configCible.pitch - configCourante.pitch) * speed * Time.deltaTime;
+            configCourante.yaw = configCourante.yaw + (configCible.yaw - configCourante.yaw) * speed * Time.deltaTime;
+            configCourante.roll = configCourante.roll + (configCible.roll - configCourante.roll) * speed * Time.deltaTime;
+
+            configCourante.fieldOfView = configCourante.fieldOfView + (configCible.fieldOfView - configCourante.fieldOfView) * speed * Time.deltaTime;
+
             configCourante.pivot = configCourante.pivot + (configCible.pivot - configCourante.pivot) * speed * Time.deltaTime;
+            configCourante.distance = configCourante.distance + (configCible.distance - configCourante.distance) * speed * Time.deltaTime;
         }
-        else configCourante.pivot = configCible.pivot;
+        else configCourante = configCible;
 
         cameraConfiguration = configCourante;
     }

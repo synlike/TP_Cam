@@ -19,7 +19,6 @@ public class CameraConfiguration
 
     public Vector3 GetPosition()
     {
-
         Vector3 offset = Vector3.back * distance;
         Vector3 posTarget = pivot + offset;
 
