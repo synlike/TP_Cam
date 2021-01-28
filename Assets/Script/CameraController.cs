@@ -75,7 +75,7 @@ public class CameraController : MonoBehaviour
         {
             poidsTotal += view.weight;
             configMoyenne.pitch += view.GetConfiguration().pitch * view.weight;
-            configMoyenne.yaw += view.GetConfiguration().yaw * view.weight;
+            configMoyenne.yaw += Vector2.SignedAngle(Vector2.right, new Vector2(Mathf.Cos(view.GetConfiguration().yaw * Mathf.Deg2Rad), Mathf.Sin(view.GetConfiguration().yaw * Mathf.Deg2Rad))) * view.weight;
             configMoyenne.roll += view.GetConfiguration().roll * view.weight;
             configMoyenne.pivot += view.GetConfiguration().pivot * view.weight;
             configMoyenne.fieldOfView += view.GetConfiguration().fieldOfView * view.weight;
