@@ -17,6 +17,9 @@ public class DollyView : AView
 
     public GameObject target;
 
+    //test
+    public float currentDistance;
+
     public Rail rail;
     public Vector3 railPosition;
     public float speed;
@@ -42,12 +45,14 @@ public class DollyView : AView
         {
             ManualMove();
         }
+        UpdateCurrentDistance();
     }
 
     public void AutoMove()
     {
         int closestNode = FindClosestNode();
         Vector3 posPoint = new Vector3(0, 0, 0);
+        float lerpDist = 0;
 
         if (closestNode == 0)
         {
@@ -61,9 +66,9 @@ public class DollyView : AView
             
             float actualDistance = GetActualDistance(closestNode, projectedDistance);
 
-            Debug.Log("Projected Distance = " + projectedDistance + " || ActualDistance = " + actualDistance);
+            lerpDist = Mathf.Lerp(currentDistance, actualDistance, Time.deltaTime);
 
-            posPoint = rail.GetPosition(actualDistance);
+            posPoint = rail.GetPosition(lerpDist, true);
         }
         else if (closestNode == rail.GetLength() - 1)
         {
@@ -76,7 +81,10 @@ public class DollyView : AView
 
             float actualDistance = GetActualDistance(closestNode, projectedDistance);
 
-            posPoint = rail.GetPosition(actualDistance);
+
+            lerpDist = Mathf.Lerp(currentDistance, actualDistance, Time.deltaTime);
+
+            posPoint = rail.GetPosition(lerpDist, true);
         }
         else
         {
@@ -89,9 +97,7 @@ public class DollyView : AView
             float projectedDistanceLeft = Vector3.Dot(vecLeft, vecToTargetLeft) / vecLeft.magnitude;
             projectedDistanceLeft = Mathf.Clamp(projectedDistanceLeft, 0, vecLeft.magnitude);
             float actualDistanceLeft = GetActualDistance(closestNode - 1, projectedDistanceLeft);
-
-            Debug.Log("Projected Distance Left = " + projectedDistanceLeft + " || ActualDistance Left = " + actualDistanceLeft);
-            Vector3 posPointLeft = rail.GetPosition(actualDistanceLeft);
+            Vector3 posPointLeft = rail.GetPosition(actualDistanceLeft, false);
 
 
             // Calcul sur segment gauche
@@ -101,9 +107,7 @@ public class DollyView : AView
             float projectedDistanceRight = Vector3.Dot(vecRight, vecToTargetRight) / vecRight.magnitude;
             projectedDistanceRight = Mathf.Clamp(projectedDistanceRight, 0, vecRight.magnitude);
             float actualDistanceRight = GetActualDistance(closestNode, projectedDistanceRight);
-
-            Debug.Log("Projected Distance Right = " + projectedDistanceRight + " || ActualDistance Right = " + actualDistanceRight);
-            Vector3 posPointRight = rail.GetPosition(actualDistanceRight);
+            Vector3 posPointRight = rail.GetPosition(actualDistanceRight, false);
 
 
             // Distance la plus faible
@@ -115,8 +119,10 @@ public class DollyView : AView
             {
                 distance = actualDistanceLeft;
             }
-            posPoint = rail.GetPosition(distance);
 
+            lerpDist = Mathf.Lerp(currentDistance, distance, Time.deltaTime);
+
+            posPoint = rail.GetPosition(lerpDist, true);
         }
         //transform.position = Vector3.Lerp(transform.position, posPoint, Time.deltaTime);
         transform.position = posPoint;
@@ -138,7 +144,7 @@ public class DollyView : AView
         CheckDistance();
 
 
-        transform.position = rail.GetPosition(distance);
+        transform.position = rail.GetPosition(distance, false);
     }
 
     public void CheckDistance()
@@ -191,6 +197,21 @@ public class DollyView : AView
         }
 
         return actualDist + distance;
+    }
+
+    public void UpdateCurrentDistance()
+    {
+        int currentNode = rail.currentNode;
+
+        Vector3 vec = rail.transform.GetChild(currentNode + 1).position - rail.transform.GetChild(currentNode).position;
+        Vector3 vecToSelf = transform.position - rail.transform.GetChild(currentNode).position;
+
+        float projectedDistance = Vector3.Dot(vec, vecToSelf) / vec.magnitude;
+        projectedDistance = Mathf.Clamp(projectedDistance, 0, vec.magnitude);
+
+        currentDistance = GetActualDistance(currentNode, projectedDistance);
+
+        Debug.Log(currentDistance);
     }
 
     public override CameraConfiguration GetConfiguration()

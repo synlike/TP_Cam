@@ -10,13 +10,15 @@ public class Rail : MonoBehaviour
 
     public float maxDistance;
 
+    public int currentNode;
+
     void Start()
     {
         length = transform.childCount;
 
         maxDistance = GetMaxDistance();
 
-        Vector3 test = GetPosition(-15);
+        Vector3 test = GetPosition(-15, false);
     }
     
     void Update()
@@ -29,7 +31,7 @@ public class Rail : MonoBehaviour
         return length;
     }
 
-    public Vector3 GetPosition(float distance)
+    public Vector3 GetPosition(float distance, bool updateNode)
     {
         Vector3 direction;
 
@@ -39,6 +41,9 @@ public class Rail : MonoBehaviour
 
         for (int i = 0; i < length - 1; i++)
         {
+            if (updateNode)
+                currentNode = i;
+
             direction = transform.GetChild(i+1).position - transform.GetChild(i).position;
             distGlobal += direction.magnitude;
 

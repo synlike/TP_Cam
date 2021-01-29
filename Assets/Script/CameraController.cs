@@ -31,11 +31,11 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Smoothing();
+        //Smoothing();
 
         PlaceCamera(cameraConfiguration);
 
-        //cameraConfiguration = GetConfigurationMoyenne();
+        cameraConfiguration = GetConfigurationMoyenne();
     }
 
     public void AddView(AView view)
@@ -58,6 +58,7 @@ public class CameraController : MonoBehaviour
 
     public void Smoothing()
     {
+
         if (speed * Time.deltaTime < 1)
         {
             configCourante.pitch = configCourante.pitch + (configCible.pitch - configCourante.pitch) * speed * Time.deltaTime;
