@@ -5,6 +5,7 @@ using UnityEngine;
 public class DollyView : AView
 {
     public bool isAuto;
+    public float speedAutoDolly = 1;
 
     [Range(-180f, 180f)]
     public float roll;
@@ -65,11 +66,11 @@ public class DollyView : AView
 
             
             float actualDistance = GetActualDistance(closestNode, projectedDistance);
-
+            
             lerpDist = Mathf.Lerp(currentDistance, actualDistance, Time.deltaTime);
 
             posPoint = rail.GetPosition(lerpDist, true);
-        }
+        } 
         else if (closestNode == rail.GetLength() - 1)
         {
             Vector3 vec1 = rail.transform.GetChild(closestNode - 1).position - rail.transform.GetChild(closestNode).position;
@@ -88,7 +89,6 @@ public class DollyView : AView
         }
         else
         {
-
             // Calcul sur segment gauche
 
             Vector3 vecLeft = rail.transform.GetChild(closestNode).position - rail.transform.GetChild(closestNode - 1).position;
@@ -120,11 +120,11 @@ public class DollyView : AView
                 distance = actualDistanceLeft;
             }
 
-            lerpDist = Mathf.Lerp(currentDistance, distance, Time.deltaTime);
+            lerpDist = Mathf.Lerp(currentDistance, distance, speedAutoDolly * Time.deltaTime);
 
             posPoint = rail.GetPosition(lerpDist, true);
         }
-        //transform.position = Vector3.Lerp(transform.position, posPoint, Time.deltaTime);
+
         transform.position = posPoint;
     }
 
