@@ -41,8 +41,7 @@ public class CameraController : MonoBehaviour
 
         if(isCutRequested)
         {
-            configCourante = configCible;
-            isCutRequested = false;
+            Cut();
         }
     }
 
@@ -105,12 +104,15 @@ public class CameraController : MonoBehaviour
         configMoyenne.pivot /= poidsTotal;
         configMoyenne.fieldOfView /= poidsTotal;
 
+        isCutRequested = true;
+
         return configMoyenne;
     }
 
     public void Cut()
     {
-
+        configCourante = configCible;
+        isCutRequested = false;
     }
 
     public void OnDrawGizmos()
