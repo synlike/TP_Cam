@@ -15,6 +15,8 @@ public class CameraController : MonoBehaviour
     public CameraConfiguration configCourante;
     public CameraConfiguration configCible;
 
+    private bool isCutRequested;
+
 
     private void Awake()
     {
@@ -36,6 +38,12 @@ public class CameraController : MonoBehaviour
         PlaceCamera(cameraConfiguration);
 
         cameraConfiguration = GetConfigurationMoyenne();
+
+        if(isCutRequested)
+        {
+            configCourante = configCible;
+            isCutRequested = false;
+        }
     }
 
     public void AddView(AView view)
@@ -98,6 +106,11 @@ public class CameraController : MonoBehaviour
         configMoyenne.fieldOfView /= poidsTotal;
 
         return configMoyenne;
+    }
+
+    public void Cut()
+    {
+
     }
 
     public void OnDrawGizmos()

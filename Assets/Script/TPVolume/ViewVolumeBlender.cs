@@ -26,7 +26,7 @@ public class ViewVolumeBlender : MonoBehaviour
         }
     }
 
-    void Update()
+    public void Update()
     {
         foreach(AViewVolume volume in activeViewVolumes)
         {
