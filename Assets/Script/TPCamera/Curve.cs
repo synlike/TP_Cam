@@ -31,7 +31,17 @@ public class Curve : MonoBehaviour
 
     public void DrawGizmos(Color c, Matrix4x4 localToWorldMatrix)
     {
-        
-    }
+        Gizmos.color = c;
 
+        Gizmos.matrix = localToWorldMatrix;
+
+        Gizmos.DrawCube(A, Vector3.one);
+        Gizmos.DrawCube(B, Vector3.one);
+        Gizmos.DrawCube(C, Vector3.one);
+        Gizmos.DrawCube(D, Vector3.one);
+
+        Gizmos.DrawLine(A, B);
+        Gizmos.DrawLine(B, C);
+        Gizmos.DrawLine(C, D);
+    }
 }
