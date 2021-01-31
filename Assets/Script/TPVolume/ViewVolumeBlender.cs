@@ -10,6 +10,8 @@ public class ViewVolumeBlender : MonoBehaviour
     private List<AViewVolume> activeViewVolumes = new List<AViewVolume>();
     private Dictionary<AView, List<AViewVolume>> volumesPerViews = new Dictionary<AView, List<AViewVolume>>();
 
+    private int maxPriority = 0;
+
 
     void Awake()
     {
@@ -26,7 +28,24 @@ public class ViewVolumeBlender : MonoBehaviour
 
     void Update()
     {
-        
+        foreach(AViewVolume volume in activeViewVolumes)
+        {
+            if(volume.priority > maxPriority)
+            {
+                maxPriority = volume.priority;
+            }
+        }
+        foreach(AViewVolume volume in activeViewVolumes)
+        {
+            if(volume.priority <  maxPriority)
+            {
+                volume.view.weight = 0;
+            }
+            else
+            {
+                volume.view.weight = Mathf.Max(volume.view.weight, volume.ComputeSelfWeight());
+            }
+        }
     }
 
     public void AddVolume(AViewVolume viewVolume)
